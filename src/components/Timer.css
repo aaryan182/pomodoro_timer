@@ -1,0 +1,78 @@
+
+.timer-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.timer-mode {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.timer-display {
+    font-size: 48px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.timer-controls {
+    display: flex;
+    justify-content: center;
+}
+
+.timer-button {
+    font-size: 18px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+}
+
+.timer-button.start {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.timer-button.start:hover {
+    background-color: #0056b3;
+    animation-name: pulse;
+}
+
+.timer-button.pause {
+    background-color: #ffc107;
+    color: #333;
+}
+
+.timer-button.pause:hover {
+    background-color: #d39e00;
+    animation-name: pulse;
+}
+
+.timer-button.reset {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.timer-button.reset:hover {
+    background-color: #b02a37;
+    animation-name: pulse;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
