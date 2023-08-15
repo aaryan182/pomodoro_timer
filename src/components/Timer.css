@@ -1,78 +1,107 @@
-
 .timer-container {
     text-align: center;
     margin-top: 50px;
-}
-
-.timer-mode {
+  }
+  
+  .timer-mode {
     font-size: 24px;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.timer-display {
-    font-size: 48px;
-    color: #333;
     margin-bottom: 20px;
-}
-
-.timer-controls {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .work-mode {
+    color: #e74c3c;
+    transform: rotateX(0deg);
+  }
+  
+  .break-mode {
+    color: #3498db;
+    transform: rotateX(180deg);
+  }
+  
+  .timer-display {
+    font-size: 48px;
+    margin-bottom: 40px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .timer-controls {
     display: flex;
     justify-content: center;
-}
-
-.timer-button {
-    font-size: 18px;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+  
+  .timer-button {
+    font-size: 16px;
     padding: 10px 20px;
-    margin: 0 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    animation-duration: 0.5s;
-    animation-fill-mode: both;
-}
-
-.timer-button.start {
-    background-color: #007bff;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .timer-button.start {
+    background-color: #2ecc71;
     color: #fff;
-}
-
-.timer-button.start:hover {
-    background-color: #0056b3;
-    animation-name: pulse;
-}
-
-.timer-button.pause {
-    background-color: #ffc107;
-    color: #333;
-}
-
-.timer-button.pause:hover {
-    background-color: #d39e00;
-    animation-name: pulse;
-}
-
-.timer-button.reset {
-    background-color: #dc3545;
+  }
+  
+  .timer-button.pause {
+    background-color: #e67e22;
     color: #fff;
-}
-
-.timer-button.reset:hover {
-    background-color: #b02a37;
-    animation-name: pulse;
-}
-
-@keyframes pulse {
+  }
+  
+  .timer-button.reset {
+    background-color: #3498db;
+    color: #fff;
+  }
+  
+  .timer-button:hover {
+    transform: scale(1.1);
+  }
+  
+  .timer-button:active {
+    transform: scale(0.9);
+  }
+  
+  .timer-button:focus {
+    outline: none;
+  }
+  
+  .timer-mode,
+  .timer-display {
+    animation: text-fade-in 0.5s ease-in-out;
+  }
+  
+  @keyframes text-fade-in {
     0% {
-        transform: scale(1);
+      opacity: 0;
+      transform: translateY(-20px);
     }
-
-    50% {
-        transform: scale(1.05);
-    }
-
     100% {
-        transform: scale(1);
+      opacity: 1;
+      transform: translateY(0);
     }
-}
+  }
+  
+  .timer-mode.work-mode,
+  .timer-mode.break-mode,
+  .timer-display {
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .timer-mode.work-mode {
+    transform-style: preserve-3d;
+    transform: rotateX(0deg);
+  }
+  
+  .timer-mode.break-mode {
+    transform-style: preserve-3d;
+    transform: rotateX(180deg);
+  }
+  
+  .timer-mode.work-mode:hover,
+  .timer-mode.break-mode:hover {
+    transform: rotateX(360deg);
+  }
+  

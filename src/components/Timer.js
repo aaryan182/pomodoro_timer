@@ -18,107 +18,100 @@ const Timer = () => {
 
     useEffect(() => {
         let interval = null;
-      
+
         if (isRunning) {
-          interval = setInterval(() => {
-            if (seconds > 0) {
-              setSeconds(seconds - 1);
-            } else {
-              if (minutes === 0) {
-                // Timer finished, toggle mode
-                if (mode === 'work') {
-                  setMode('break');
-                  setMinutes(5); // Set break time to 5 minutes
-                  audioRef.current.src = workTimeSound;
-                  audioRef.current.play();
-                //   alert('Work time is over! Have a Break now !!');
+            interval = setInterval(() => {
+                if (seconds > 0) {
+                    setSeconds(seconds - 1);
                 } else {
-                  setMode('work');
-                  setMinutes(25); // Set work time to 25 minutes
-                  audioRef.current.src = breakTimeSound;
-                  audioRef.current.play();
-                //   alert('Get on the work!');
+                    if (minutes === 0) {
+                        if (mode === 'work') {
+                            setMode('break');
+                            setMinutes(5); // Set break time to 5 minutes
+                            audioRef.current.src = workTimeSound;
+                            audioRef.current.play();
+                        } else {
+                            setMode('work');
+                            setMinutes(25); // Set work time to 25 minutes
+                            audioRef.current.src = breakTimeSound;
+                            audioRef.current.play();
+                        }
+                    } else {
+                        setMinutes(minutes - 1);
+                        setSeconds(59);
+                    }
                 }
-              } else {
-                setMinutes(minutes - 1);
-                setSeconds(59);
-              }
-            }
-          }, 1000);
+            }, 1000);
         } else {
-          clearInterval(interval);
-          audioRef.current.src = null;
-          // Stop ticking sound
-          clearInterval(tickIntervalRef.current);
-          setIsTickPlaying(false);
-          tickAudioRef.current.pause();
-          tickAudioRef.current.currentTime = 0;
+            clearInterval(interval);
+            audioRef.current.src = null;
+            // Stop ticking sound
+            clearInterval(tickIntervalRef.current);
+            setIsTickPlaying(false);
+            tickAudioRef.current.pause();
+            tickAudioRef.current.currentTime = 0;
         }
-      
+
         if (isRunning && isTickPlaying) {
-          tickIntervalRef.current = setInterval(() => {
-            // ...
-          }, 1000);
-          tickAudioRef.current.play();
+            tickIntervalRef.current = setInterval(() => {
+            }, 1000);
+            tickAudioRef.current.play();
         } else {
-          clearInterval(tickIntervalRef.current);
-          tickAudioRef.current.pause();
-          tickAudioRef.current.currentTime = 0;
+            clearInterval(tickIntervalRef.current);
+            tickAudioRef.current.pause();
+            tickAudioRef.current.currentTime = 0;
         }
-      
+
         return () => {
-          clearInterval(interval);
-          clearInterval(tickIntervalRef.current);
-          tickAudioRef.current.pause();
-          tickAudioRef.current.currentTime = 0;
+            clearInterval(interval);
+            clearInterval(tickIntervalRef.current);
+            tickAudioRef.current.pause();
+            tickAudioRef.current.currentTime = 0;
         };
-      }, [isRunning, minutes, seconds, mode, isTickPlaying]);
-      
+    }, [isRunning, minutes, seconds, mode, isTickPlaying]);
+
 
     const startTimer = () => {
         audioRef.current.src = startSound;
         audioRef.current.play();
-      
-        audioRef.current.onended = () => {
-          tickAudioRef.current.play();
-          setIsTickPlaying(true);
-        };
-      
-        setIsRunning(true);
-      };
-      
-      
-      
 
-      const pauseTimer = () => {
+        audioRef.current.onended = () => {
+            tickAudioRef.current.play();
+            setIsTickPlaying(true);
+        };
+
+        setIsRunning(true);
+    };
+
+
+    const pauseTimer = () => {
         setIsRunning(false);
         setIsTickPlaying(false);
         tickAudioRef.current.pause();
-      };
-      
-      
-      
+    };
 
-      const resetTimer = () => {
+    const resetTimer = () => {
         setIsRunning(false);
         setIsTickPlaying(false);
         clearInterval(tickIntervalRef.current);
         tickAudioRef.current.pause();
         tickAudioRef.current.currentTime = 0;
-      
+
         if (mode === 'work') {
-          setMinutes(25);
+            setMinutes(25);
         } else {
-          setMinutes(5);
+            setMinutes(5);
         }
         setSeconds(0);
-      };
-      
-      
+    };
+
+
 
     return (
         <div className="timer-container">
-            <h2 className="timer-mode">{mode === 'work' ? 'Work Time' : 'Break Time'}</h2>
+            <h2 className={`timer-mode ${mode === 'work' ? 'work-mode' : 'break-mode'}`}>
+                {mode === 'work' ? 'Work Time' : 'Break Time'}
+            </h2>
             <div className="timer-display">
                 {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
             </div>
